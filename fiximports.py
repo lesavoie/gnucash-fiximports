@@ -91,6 +91,7 @@ def readrules(filename):
                         pattern = result.group(2)
                         compiled = re.compile(pattern)  # Makesure RE is OK
                         rules.append((compiled, ac))
+                        logging.debug('Found account %s and rule %s' % ( ac, pattern ) )
                     else:
                         logging.warn('Ignoring line: (incorrect format): "%s"', line)
     return rules
@@ -179,7 +180,6 @@ def main():
             for split in splits:
                 ac = split.GetAccount()
                 acname = ac.GetName()
-                logging.debug('%s: %s => %s', trans_date, trans_desc, acname)
                 if imbalance_pattern.match(acname):
                     imbalance += 1
                     search_str = trans_desc
@@ -187,9 +187,11 @@ def main():
                         search_str = trans_memo
                     newac = get_ac_from_str(search_str, rules, root_account)
                     if newac != "":
-                        logging.debug('\tChanging account to: %s', newac.GetName())
+                        logging.info('Setting account for "%s" to "%s"', trans_desc, newac.get_full_name())
                         split.SetAccount(newac)
                         fixed += 1
+                    else:
+                        logging.info('No rule found for "%s"', trans_desc)
 
         if not args.nochange:
             gnucash_session.save()
