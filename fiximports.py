@@ -187,7 +187,7 @@ def main():
                         search_str = trans_memo
                     newac = get_ac_from_str(search_str, rules, root_account)
                     if newac != "":
-                        logging.info('Setting account for "%s" to "%s"', trans_desc, newac.get_full_name())
+                        logging.debug('Setting account for "%s" to "%s"', trans_desc, newac.get_full_name())
                         split.SetAccount(newac)
                         fixed += 1
                     else:
