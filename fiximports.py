@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # fiximports.py -- Categorize imported transactions according to user-defined
 #                  rules.
